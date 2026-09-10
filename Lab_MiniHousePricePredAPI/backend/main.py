@@ -25,6 +25,8 @@ def predict_price(area: float, bedrooms: int, location: str) -> float:
 
 
 # Task 2
+# We use standard 'def' instead of 'async def' because the prediction function relies on simple CPU-bound 
+# arithmetic and does not perform any blocking I/O operations (like database calls).
 @app.get("/predict")
 def predict(area: float, bedrooms: int, location: str = "other"):
     price = predict_price(area, bedrooms, location)
