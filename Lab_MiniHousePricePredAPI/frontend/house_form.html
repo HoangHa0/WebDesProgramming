@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>House Price Predictor</title>
+  </head>
+  <body>
+    <h1>House Price Prediction Form</h1>
+
+    <form id="houseForm">
+      <div>
+        <label for="area">Area (m²):</label>
+        <input type="number" id="area" name="area" step="any" required />
+      </div>
+      <br />
+      <div>
+        <label for="bedrooms">Bedrooms:</label>
+        <input type="number" id="bedrooms" name="bedrooms" required />
+      </div>
+      <br />
+      <div>
+        <label for="location">Location:</label>
+        <input
+          type="text"
+          id="location"
+          name="location"
+          placeholder="e.g., hanoi, hcmc, other"
+        />
+      </div>
+      <br />
+      <button type="submit">Predict Price</button>
+    </form>
+
+    <h2>Result:</h2>
+    <div id="result"></div>
+
+    <script>
+      document
+        .getElementById("houseForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const area = document.getElementById("area").value;
+          const bedrooms = document.getElementById("bedrooms").value;
+          const locationInput = document
+            .getElementById("location")
+            .value.trim();
+
+          let url = `/predict?area=${encodeURIComponent(area)}&bedrooms=${encodeURIComponent(bedrooms)}`;
+          if (locationInput) {
+            url += `&location=${encodeURIComponent(locationInput)}`;
+          }
+
+          const resultDiv = document.getElementById("result");
+          resultDiv.textContent = "Calculating...";
+
+          try {
+            const response = await fetch(url);
+            if (!response.ok) {
+              throw new Error(`Error: ${response.statusText}`);
+            }
+            const data = await response.json();
+
+            const formattedPrice = new Intl.NumberFormat().format(
+              data.predicted_price,
+            );
+            resultDiv.textContent = `Predicted Price: ${formattedPrice} VND`;
+          } catch (error) {
+            resultDiv.textContent = `Failed to fetch prediction: ${error.message}`;
+          }
+        });
+    </script>
+  </body>
+</html>
