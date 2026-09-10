@@ -20,7 +20,14 @@ Q: Why does calling `/predict` without an area return a 422 error? [image03_task
 A: It returns a 422 Unprocessable Entity error because `area` does not have a default value in the function parameters (`area: float`).
 FastAPI flags it as a required parameter and automatically blocks the request if it is missing, citing a validation error.
 
-# Task 5 Answers
+# Task 5: See frontend/house_form.html
+
+Q: Why does a relative URL (`fetch('/predict?...')`) work here?
+A: Because the HTML file is mounted and served by the exact same FastAPI server (`127.0.0.1:8000`) that hosts the API.
+The browser resolves the relative path against the current origin, meaning it automatically directs the fetch request to
+`http://127.0.0.1:8000/predict`. This inherently avoids CORS issues.
+
+# Task 6 Answers
 
 Q: Difference between Query Parameters and JSON Body:?
 A: Query parameters are appended directly to the end of the URL (e.g., `?area=80`), which makes them visible in the browser
