@@ -1,0 +1,38 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    padding: 16px;
+    background-color: #f5f5f5;
+}
+
+main {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
+    max-width: 95%; /* Avoid fixed pixel widths on outer containers for responsive design */
+    overflow-x: auto; /* Adds a horizontal scrollbar inside the container if the table is too wide */
+    margin: 0 auto; 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; 
+    margin-top: 20px;
+    min-width: 600px; /* Ensures the table doesn't shrink so much that text becomes unreadable */
+}
+
+th, td {
+    padding: 14px; 
+    border: 1px solid #d4d4d4; 
+    text-align: left;
+    word-break: break-word; /* Forces long strings like emails to wrap instead of pushing the layout out */
+}
+
+th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
