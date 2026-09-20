@@ -10,12 +10,12 @@ async function fetchUsers() {
 }
 
 async function renderUsers() {
-    const userData = await fetchUsers();
+    const data = await fetchUsers();
 
     let tableBody = document.querySelector("#user-table-body");
     tableBody.textContent = ""; // Clear existing table rows
 
-    userData.forEach((user) => {
+    data.items.forEach((user) => {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${user.id}</td>
