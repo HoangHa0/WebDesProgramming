@@ -119,10 +119,14 @@ def verify_session_cookie(session_id: str | None = Cookie(default=None)):
 def get_secure_data():
     return {"ok": True}
 
-@app.post("/login")
+@app.get("/login")
 def login(response: Response):
     response.set_cookie(key="session_id", value="abc123", samesite="lax", httponly=True)
     return {"message": "Logged Success"}
+
+@app.get("/visist")
+def visit(session_id: str | None = Cookie(default=None)):
+    return {"session_id": session_id}
 
 # Admin router group
 admin = APIRouter(prefix="/admin", dependencies=[Depends(verify_session_cookie)])
