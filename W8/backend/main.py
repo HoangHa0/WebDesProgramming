@@ -121,7 +121,7 @@ def get_secure_data():
 
 @app.post("/login")
 def login(response: Response):
-    response.set_cookie(key="session_id", value="abc123", httponly=True)
+    response.set_cookie(key="session_id", value="abc123", samesite="lax", httponly=True)
     return {"message": "Logged Success"}
 
 # Admin router group
