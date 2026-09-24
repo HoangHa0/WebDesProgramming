@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product Management</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Product Management</h1>
+    </header>
+    <main>
+      <button onclick="handleLogin()">Login</button>
+      <button id="btn-fetch" onclick="renderUsers()">Fetch Users</button>
+      <table id="user-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody id="user-table-body"></tbody>
+      </table>
+    </main>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
