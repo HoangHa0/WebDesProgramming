@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heroes</title>
+  </head>
+
+  <body>
+    <h1>Heroes</h1>
+
+    <table id="heroes">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody></tbody>
+    </table>
+
+    <script>
+      const API = "http://localhost:8000/api/v1";
+      const tbody = document.querySelector("#heroes tbody");
+
+      async function loadHeroes() {
+        const response = await fetch(`${API}/heroes?limit=50`);
+        const heroes = await response.json();
+
+        tbody.replaceChildren();
+
+        for (const hero of heroes) {
+          const row = tbody.insertRow();
+
+          for (const value of [
+            hero.id,
+            hero.name,
+            hero.secret_name,
+            hero.age ?? "-",
+            hero.status,
+          ]) {
+            row.insertCell().textContent = value;
+          }
+        }
+      }
+
+      async function createHero(data) {
+        const response = await fetch(`${API}/heroes`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.status === 201) {
+          await loadHeroes();
+        } else if (response.status === 422) {
+          const error = await response.json();
+
+          alert(
+            error.detail
+              .map((detail) => `${detail.loc.at(-1)}: ${detail.msg}`)
+              .join("\n"),
+          );
+        } else {
+          alert(`Error ${response.status}`);
+        }
+      }
+
+      loadHeroes();
+    </script>
+  </body>
+</html>
